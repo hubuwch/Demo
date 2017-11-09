@@ -4,8 +4,14 @@
 package com.example.demo.controller.user;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +27,9 @@ import com.example.demo.entry.User;
 @RequestMapping(value="/users")
 public class UserController {
   
+  static Map<Long, User> users = Collections.synchronizedMap(new HashMap<Long,User>());
+  
+  
   @RequestMapping(value="/",method=RequestMethod.GET)
   public List<User> getUserList(){
     User user1 = new User();
@@ -35,6 +44,12 @@ public class UserController {
     users.add(user1);
     users.add(user2);
     return users;
+  }
+  
+  @RequestMapping(value="/",method = RequestMethod.POST)
+  public String postUser( @ModelAttribute User user){
+    users.put(user.getId(), user);
+    return "success";
   }
   
   

@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
@@ -27,6 +29,19 @@ public class DemoApplicationTests {
       mvc.perform(MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON))
               .andExpect(status().isOk())
               .andExpect(content().string(equalTo("Hello World!")));
+    }
+    
+    @Test
+    public void testUserController() throws Exception{
+      //测试usercontroller
+      MockHttpServletRequestBuilder request = null;
+      
+      //1、get查user列表
+      request = MockMvcRequestBuilders.get("/users/");
+      
+      mvc.perform(request)
+          .andExpect(status().isOk())
+          .andExpect(content().string(equalTo("[]")));
     }
     
 
