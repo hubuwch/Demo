@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,7 @@ public class UserController {
   
   @RequestMapping(value="/",method=RequestMethod.GET)
   public List<User> getUserList(){
-    User user1 = new User();
+    /*User user1 = new User();
     user1.setId(1L);
     user1.setName("隗超");
     user1.setAge(12);
@@ -42,8 +43,9 @@ public class UserController {
     user2.setAge(25);
     List<User> users = new ArrayList<>();
     users.add(user1);
-    users.add(user2);
-    return users;
+    users.add(user2);*/
+    List<User> u = new ArrayList<>(users.values());
+    return u;
   }
   
   @RequestMapping(value="/",method = RequestMethod.POST)
@@ -52,7 +54,26 @@ public class UserController {
     return "success";
   }
   
+  @RequestMapping(value="/{id}",method = RequestMethod.GET)
+  public User getUser(@PathVariable Long id){
+    return users.get(id);
+  }
   
+  //更新 put   restful   
+  @RequestMapping(value = "{id}",method = RequestMethod.PUT)
+  public String putUser(@PathVariable Long id,@ModelAttribute User user){
+    User u = users.get(id);
+    u.setName(user.getName());
+    u.setAge(user.getAge());
+    users.put(id, u);
+    return "success";
+  }
+  
+  @RequestMapping(value="/{id}",method=RequestMethod.DELETE)
+  public String delete(@PathVariable Long id){
+     users.remove(id);
+     return "success";
+  }
   
 
 }

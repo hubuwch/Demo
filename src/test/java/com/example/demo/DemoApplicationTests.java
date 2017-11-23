@@ -42,6 +42,53 @@ public class DemoApplicationTests {
       mvc.perform(request)
           .andExpect(status().isOk())
           .andExpect(content().string(equalTo("[]")));
+      
+      
+      //2、post 提交user
+      //模拟一个带参数的post类型的http请求
+      request =MockMvcRequestBuilders.post("/users/")
+                                 .param("id", "1")
+                                 .param("name", "学习榜样")
+                                 .param("age", "20");
+      //执行http请求，并指定输出预期结果
+      mvc.perform(request)
+                        .andExpect(content().string(equalTo("success")));
+      
+      //3、 get 带参数http请求
+      
+      request = MockMvcRequestBuilders.get("/users/1");
+      
+      mvc.perform(request)
+                         .andExpect(content().string(equalTo("{\"id\":1,\"name\":\"学习榜样\",\"age\":20}")));
+      
+      //4、 put  
+      request = MockMvcRequestBuilders.put("/users/1")
+                                      .param("name", "烽火云创")
+                                      .param("age", "30");
+      mvc.perform(request)
+                         .andExpect(content().string(equalTo("success")));
+      
+      
+      //5、 get 带参数http请求
+            
+            request = MockMvcRequestBuilders.get("/users/1");
+            
+            mvc.perform(request)
+                               .andExpect(content().string(equalTo("{\"id\":1,\"name\":\"烽火云创\",\"age\":30}")));
+      //6、delete 
+            request = MockMvcRequestBuilders.delete("/users/1");
+            mvc.perform(request)
+                               .andExpect(content().string(equalTo("success")))
+                               .andReturn();
+            
+            
+     //7、getlist
+            request = MockMvcRequestBuilders.get("/users/");
+            
+            mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("[]")));
+                
     }
     
 
