@@ -51,7 +51,7 @@ public class UserController {
   
   @RequestMapping(value="/",method=RequestMethod.GET)
   public List<User> getUserList(){
-    User user1 = new User();
+   /* User user1 = new User();
     user1.setId(1L);
     user1.setName("隗超");
     user1.setAge(12);
@@ -61,9 +61,9 @@ public class UserController {
     user2.setAge(25);
     List<User> users = new ArrayList<>();
     users.add(user1);
-    users.add(user2);
-    //List<User> u = new ArrayList<>(users.values());
-    return users;
+    users.add(user2);*/
+    List<User> u = new ArrayList<>(users.values());
+    return u;
   }
   
   @RequestMapping(value="/",method = RequestMethod.POST)
